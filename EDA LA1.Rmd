@@ -1,0 +1,1159 @@
+---
+title: "Data Analysis on Predict test scores of students"
+output:
+  html_document: default
+  word_document: default
+---
+
+### Data loading
+
+```{r}
+df = read.csv('test_scores.csv')
+head(df)
+```
+
+### The type of object can be ascertained using the class() command
+
+```{r}
+class(df)
+```
+
+```{r}
+class(df$posttest)
+```
+
+```{r}
+class(dimnames(df))
+```
+
+### Shows the top of the data object and by default shows the first six rows:
+
+```{r}
+head(df)
+```
+
+### Can elect to show a different number of rows using the n = instruction like so:
+
+```{r}
+head(df, n=3)
+```
+
+### can also display the bottom of the data using the tail() command default shows the last six rows:
+
+```{r}
+tail(df)
+```
+
+### Can elect to show a different number of rows using the n = instruction like so:
+```{r}
+tail(df, n=3)
+```
+
+### To get information about an Data frame and particular columns:
+
+```{r}
+summary(df)
+```
+
+```{r}
+summary(df$posttest)
+```
+
+```{r}
+mean(df$posttest)
+```
+
+```{r}
+median(df$posttest)
+```
+
+### Shows the median absolute deviation
+
+```{r}
+mad(df$posttest)
+```
+
+```{r}
+mode(df$posttest)
+```
+
+```{r}
+var(df$posttest)
+```
+
+```{r}
+sd(df$posttest)
+```
+
+```{r}
+quantile(df$posttest)
+```
+
+### Returns Tukey's five number summary (minimum, lower-hinge, median, upper-hinge, maximum) for the input data.
+
+```{r}
+fivenum(df$posttest)
+```
+
+### F Test to Compare Two Variances
+
+```{r}
+var.test(df$posttest, df$pretest)
+```
+
+###  str() command is useful to see the object structure
+
+```{r}
+str(df)
+```
+
+### structure returns the given object with further attributes set
+
+```{r}
+head(structure(df))
+```
+
+### can also look at all the named objects you have at once using the ls.str() command
+
+```{r}
+ls.str(df)
+```
+
+### can use the pattern = instruction to narrow down your focus
+
+```{r}
+ls.str(pattern = 'df')
+```
+
+### The most basic command that enables the viewing of column or row is:
+
+```{r}
+names(df)
+```
+
+```{r}
+row.names(df)
+```
+
+```{r}
+colnames(df)
+```
+
+### dimnames(): this looks at both the row and column names at the same time:
+
+```{r}
+dimnames(df)
+```
+
+### length() command used to determine the number of items in an object
+
+```{r}
+length(df)
+```
+
+### To extract a particular column and particular row values
+
+```{r}
+head(df$posttest)
+```
+
+```{r}
+df$posttest[3]
+```
+
+```{r}
+df$posttest[1:5]
+```
+
+```{r}
+tdf = attach(df)
+tdf
+```
+
+### The max() and min() commands display the largest and smallest values in a numeric object
+
+```{r}
+max(df$posttest)
+```
+
+```{r}
+max(df$pretest)
+```
+
+```{r}
+min(df$posttest)
+```
+
+```{r}
+min(df$pretest)
+```
+
+
+```{r}
+head(stack(df))
+```
+
+### Sorting default is ascending order
+
+```{r}
+head(sort(df$posttest))
+```
+
+```{r}
+head(sort(df$pretest))
+```
+
+### can get an index using the order() command. This uses the same instructions as the sort() command, but tells you the position of each item along the vector:
+
+```{r}
+head(order(df$posttest))
+```
+
+### The rank() command gives the rank number like order() in a slightly different manner when the values are same the ranks are shared between them which is not in order()
+
+```{r}
+head(rank(df$posttest), n=10)
+```
+
+### Displaying selected rows & columns
+
+```{r}
+df[3,3]
+```
+
+```{r}
+df[3, 1:5]
+```
+
+```{r}
+df[c(1,455,1000),]
+```
+
+```{r}
+df[c(511,652,121), "school"]
+```
+
+```{r}
+df[c(65,515,114), 1:5 ]
+```
+
+### TO convert from Data frame from matrix
+
+```{r}
+head(as.matrix(df))
+```
+
+### The cbind() and rbind() commands assemble a matrix/data frames, by columns or rows, from several other object
+
+```{r}
+head(rbind(df))
+```
+
+```{r}
+head(cbind(df))
+```
+
+### Simple Cumulative Commands
+
+```{r}
+head(cumsum(df$posttest))
+```
+
+```{r}
+head(cummax(df$pretest))
+```
+
+```{r}
+head(cummin(df$posttest))
+```
+
+### The cumulative product
+
+```{r}
+head(cumprod(df$posttest))
+```
+
+### The table() command enables you to specify which columns of data you want to use to create your contingency table
+
+```{r}
+table(df$posttest)
+```
+
+```{r}
+head(as.table(df$posttest))
+```
+
+### To check whether the data extracted is data frame or not
+
+```{r}
+is.data.frame(df)
+```
+
+```{r}
+is.table(df)
+```
+
+### The class() command can form the basis of a logical test by using the if() command in the following manner:
+
+```{r}
+if(class(df) == 'data.frame') TRUE else FALSE
+```
+
+### The seq_along() command creates a simple index
+
+```{r}
+seq_along(df)
+```
+
+### Create a basic stem and leaf plot using the stem() command
+
+```{r}
+stem(df$posttest)
+```
+
+### Now increase the number of bins used by adding a scale = 2 instruction
+
+```{r}
+stem(df$posttest, scale = 2)
+```
+
+### stem with a conditional statement:
+
+```{r}
+with(df, stem(df$posttest[df$school == 'ANKYI']))
+```
+
+### Histogram Plotting:
+
+```{r}
+hist(df$posttest)
+```
+
+```{r}
+hist(df$pretest)
+```
+
+```{r}
+hist(df$n_student)
+```
+
+```{r}
+hist(df$posttest, col = 'lightblue', xlab = 'PostTest', ylim = c(0, 0.1), freq = FALSE)
+```
+
+### Have seen in drawing a histogram with the hist() command that you can use freq = FALSE to force the y-axis to display the density rather than the frequency of the data. You can also call on the density function directly via the density() command.
+
+```{r}
+density(df$posttest)
+```
+
+### Using the Density Function to Draw a Graph
+
+```{r}
+plot(density(df$posttest))
+```
+
+```{r}
+plot(density(df$pretest))
+```
+
+```{r}
+hist(df$posttest, freq = F)
+lines(density(df$posttest), lty = 2)
+lines(density(df$posttest, k = 'rectangular'))
+```
+
+### Generates n random numbers from the normal distribution with mean of 0 and standard deviation of 1
+
+```{r}
+head(rnorm(df$posttest, mean = 0, sd = 1))
+```
+
+### Returns the probability for the quantile q
+
+```{r}
+head(pnorm(df$posttest, mean = 0, sd = 1))
+```
+
+### Returns the quantile for a given probability p
+
+```{r}
+head(qnorm(df$posttest, mean = 0, sd = 1))
+```
+
+### Gives the density function for values x
+
+```{r}
+head(dnorm(df$posttest, mean = 0, sd = 1))
+```
+
+### Quantile-Quantile Plot
+
+```{r}
+qqnorm(df$posttest)
+```
+
+```{r}
+qqnorm(df$pretest)
+```
+
+```{r}
+qqnorm(df$posttest, main = 'QQ plot of df$posttest', xlab = 'Theoretical', 
+ylab = 'Quantiles for df$posttest')
+qqline(df$posttest, lwd = 2, lty = 2)
+```
+
+### can also plot one distribution against another as a quantile-quantile plot using the qqplot() command.
+
+```{r}
+qqplot(df$pretest, df$posttest)
+```
+
+### would be useful to draw a straight line on your qqplot() and you can do that using the abline() command. This command uses the properties of a straight line (that is, y = a + bx) to produce a  line on an existing plot. The general form of the command is: abline(a = intercept, b = slope)
+
+###  lm(), which carries out linear modeling. This command determines the line of best fit between the x and y values in your qqp object.
+
+```{r}
+qqp = qqplot(df$pretest, df$posttest)
+abline(lm(qqp$y ~ qqp$x))
+```
+
+### The basic method of applying a t-test is to compare two vectors of numeric data
+
+```{r}
+t.test(df$pretest, df$posttest)
+```
+
+### can override the default and use the classic t-test by adding the var.equal = TRUE instruction, which forces the command to assume that the variance of the two samples is equal.
+
+```{r}
+t.test(df$pretest, df$posttest, var.equal = TRUE)
+```
+
+### can also carry out a one-sample t-test. In this version you supply the name of a single vector and the mean to compare it to (this defaults to 0):
+
+```{r}
+t.test(df$posttest, mu = 5)
+```
+
+### Using Directional Hypotheses
+
+```{r}
+t.test(df$posttest, mu = 5, alternative = 'greater')
+```
+
+### Formula Syntax and Subsetting Samples in the t-Test
+
+```{r}
+t.test(df$posttest ~ df$school, data = df, subset = df$school %in% c('ANKYI' , 'CCAAW'))
+```
+
+### Two-Sample U-Test
+
+```{r}
+wilcox.test(df$pretest, df$posttest)
+```
+
+### Carries out a basic correlation between x and y . If x is a matrix or data frame, y can be omitted
+
+```{r}
+cor(df$pretest, df$posttest)
+```
+
+### Determines covariance between x and y . If x is a matrix or data frame, y can be omitted 
+
+```{r}
+x = cov(df$pretest, df$posttest)
+x
+```
+
+### The cov2cor() command is used to determine the correlation from a matrix of covariance in the following example:
+
+```{r}
+v = as.matrix(x)
+cov2cor(v)
+```
+
+### Significance Testing in Correlation Tests
+
+```{r}
+cor.test(df$pretest, df$posttest)
+```
+
+### Chi-squared tests of association can be carried out using the chisq.test() command.
+
+```{r}
+chisq.test(df$posttest)
+```
+
+### BoxPlot's:
+
+```{r}
+boxplot(df$posttest)
+```
+
+```{r}
+boxplot(df$pretest)
+```
+
+```{r}
+boxplot(df$pretest, df$posttest)
+```
+
+```{r}
+boxplot(df$pretest ~ df$school, data = df)
+```
+
+```{r}
+boxplot(df$posttest ~ df$school, data = df)
+```
+
+```{r}
+boxplot(df$posttest ~ df$gender, data = df)
+```
+
+```{r}
+boxplot(df$pretest ~ df$gender, data = df)
+```
+
+```{r}
+boxplot(df$posttest ~ df$school_setting)
+```
+
+```{r}
+boxplot(df$posttest ~ df$school_type)
+```
+
+```{r}
+boxplot(df$posttest ~ df$teaching_method)
+```
+
+```{r}
+boxplot(df$posttest ~ df$lunch)
+```
+
+### Horizontal Boxplots
+
+```{r}
+boxplot(df$posttest, horizontal = T)
+title(xlab = 'PostTest scores')
+```
+
+### scatter plot's
+filtering the rows by school level (ANKYI) and storing the df in temp object for ease of scatter plotting and for further usage
+
+```{r}
+library(dplyr)
+temp = df %>% filter(df$school == "ANKYI")
+plot(temp$pretest, temp$posttest, pch = 25)
+```
+
+### The pch = instruction refers to the plotting character, and can be specified in one of several ways. You can type an integer value and this code will be reflected in the symbol/character produced. For values from 0 to 25
+
+```{r}
+with(df, plot(df$posttest[df$school == 'ANKYI'], pch = 0))
+```
+
+### with() command can be used to get the particular values based on row(level) conditions
+
+```{r}
+with(df, (df$posttest[df$school == 'ANKYI']))
+```
+
+### the pairs() command takes all the columns in a data frame and creates a matrix of scatter plots.
+
+```{r}
+pairs(~ pretest + posttest, data = temp)
+```
+
+### Line plot
+
+```{r}
+plot(temp$posttest, type = 'l' )
+```
+
+```{r}
+plot(temp$posttest, type = 'b')
+```
+
+### Pie chart
+
+```{r}
+pie(temp$posttest, labels = 'PostTest score')
+```
+
+```{r}
+pie(temp$pretest, labels = 'PreTest score')
+```
+
+### Cleveland Dot Charts
+
+```{r}
+dotchart(temp$posttest)
+```
+
+### Bar plot
+
+```{r}
+barplot(temp$posttest)
+title(xlab = 'ANKYI school', ylab = 'PostTest score')
+box()
+```
+
+### table() used to get the column's diff level(type) counts
+
+```{r}
+table(df$school)
+```
+
+```{r}
+barplot(temp$posttest, horiz = T)
+title(xlab = 'ANKYI school', ylab = 'PostTest score')
+box()
+```
+
+### the analysis of variance using the aov() command
+
+```{r}
+temp.aov = na.omit(aov(temp$pretest ~ temp$posttest, data = temp))
+temp.aov
+```
+
+### To see the classic ANOVA table of results you need to use the summary() command like so
+
+```{r}
+summary(temp.aov)
+```
+
+### Two-way ANOVA
+
+```{r}
+toway = aov(posttest ~ pretest * n_student, data = temp)
+toway
+```
+
+```{r}
+interaction.plot(temp$posttest, temp$pretest, temp$n_student)
+```
+
+```{r}
+factor(df$school_setting)
+```
+
+### creating new testCol/testRow for addition as a new column/row to the df object (using rep() command)
+
+```{r}
+testCol = c(rep(df$posttest - df$pretest, length(df)))
+head(testCol)
+```
+
+```{r}
+testRow = c('NMIT', 'Urban', "Non-public", 263, 'Standard', 18, '1NT20SDS09', 'Male', 'NA', 00, 00)
+testRow
+```
+
+### Adding Rows or Columns
+
+```{r}
+test = data.frame(df, testCol)
+head(test)
+```
+
+```{r}
+test = df
+test['testRow',] = testRow
+tail(test)
+```
+
+```{r}
+test = df
+test["Test",] = NA
+tail(test)
+```
+
+### Column Indexes
+
+```{r}
+col(temp, as.factor = F)
+```
+
+### Extracting two(2) columns from df
+
+```{r}
+x = df[ , 10:11]
+head(x)
+```
+
+### Simple Column and Row Summaries
+
+```{r}
+colMeans(x)
+```
+
+```{r}
+rowMeans(x)
+```
+
+```{r}
+colSums(x)
+```
+
+```{r}
+rowSums(x)
+```
+
+### The apply() command to apply a function over all the rows or columns of a data frame (or matrix)
+
+Same as colMean() in above code
+
+```{r}
+apply(df[ , 10:11], 2, mean)
+```
+
+```{r}
+apply(df[ , 10:11], 1, mean)
+```
+
+```{r}
+apply(df[ , 10:11], 2, median)
+```
+
+```{r}
+apply(df[ , 10:11], 2, var)
+```
+
+### Using tapply() to Summarize Using a Grouping Variable
+
+```{r}
+tapply(df$posttest, df$school, FUN = mean)
+```
+
+```{r}
+tapply(df$posttest, df$school, FUN = var)
+```
+
+```{r}
+tapply(df$posttest, df$school_setting, FUN = mean)
+```
+
+```{r}
+tapply(df$posttest, df$school_type, FUN = mean)
+```
+
+```{r}
+tapply(df$posttest, df$teaching_method, FUN = mean)
+```
+
+```{r}
+tapply(df$posttest, df$gender, FUN = mean)
+```
+
+```{r}
+tapply(df$posttest, df$lunch, FUN = mean)
+```
+
+### The aggregate() command enables you to compute summary statistics for subsets of a data frame or matrix; the result comes out as a single matrix rather than an array item, even with multiple grouping factors
+
+```{r}
+aggregate(df[ , 10:11], by = list(df$school), FUN = mean)
+```
+
+```{r}
+aggregate(df[ , 10:11], by = list(df$school_setting), FUN = mean)
+```
+
+```{r}
+aggregate(df[ , 10:11], by = list(df$school_type), FUN = mean)
+```
+
+```{r}
+aggregate(df[ , 10:11], by = list(df$teaching_method), FUN = mean)
+```
+
+```{r}
+aggregate(df[ , 10:11], by = list(df$gender), FUN = mean)
+```
+
+### uding cbind()
+
+```{r}
+aggregate(cbind(df$pretest, df$posttest), data = df, by = list(df$lunch), FUN = mean)
+```
+
+```{r}
+aggregate(df$posttest ~ df$school, data = df, FUN = mean)
+```
+
+```{r}
+aggregate(df$posttest ~ df$school * df$school_type, data = df, FUN = mean)
+```
+
+### The na.omit() command strips out unwanted NA items from vectors and data frames.
+
+```{r}
+head(na.omit(df))
+```
+### ls and objects return a vector of character strings giving the names of the objects in the specified environment
+
+```{r}
+objects(df)
+```
+
+```{r}
+ls(df)
+```
+
+### Simple lineaR RegReSSion
+
+```{r}
+dflm = lm(posttest ~ school, data = df)
+dflm
+```
+
+```{r}
+cor.test(~ df$pretest + df$posttest, data = df)
+```
+
+### Linear Model Results Objects
+
+###  can extract the coefficients using the coef() command
+
+```{r}
+coef(dflm)
+```
+
+### can obtain confidence intervals on these coefficients using the confint() command
+
+```{r}
+confint(dflm)
+```
+
+### Fitted Values
+
+```{r}
+head(fitted(dflm))
+```
+
+### Residuals
+
+```{r}
+head(residuals(dflm))
+```
+### Formula
+
+```{r}
+formula(dflm)
+```
+
+```{r}
+dflm$call
+```
+
+```{r}
+formula(df)
+```
+
+### Using the segments() Command for Error Bars
+
+```{r}
+df.m = apply(df[,10:11], 2, mean)
+df.m
+```
+
+```{r}
+df.sd = apply(df[ , 10:11], 2, sd)
+df.sd
+```
+
+```{r}
+df.s = apply(df[,10:11], 2, sum)
+df.s
+```
+
+```{r}
+df.1 = df.s/df.m
+df.1
+```
+
+```{r}
+df.se = df.sd / sqrt(df.1)
+df.se
+```
+
+```{r}
+df.m + df.se
+```
+
+```{r}
+max(df.m + df.se)
+```
+
+```{r}
+df.max = round(max(df.m + df.se) + 0.5, 0)
+df.max
+```
+
+```{r}
+bp = barplot(df.m, ylim = c(0, df.max))
+bp
+```
+
+```{r}
+bp = barplot(df.m, ylim = c(0, df.max))
+segments(bp, df.m + df.se, bp, df.m - df.se)
+segments(bp - 0.2, df.m - df.se, bp + 0.2, df.m - df.se)
+box()
+title(xlab = 'Type of test', ylab = 'Scores')
+```
+
+### Creating Mathematical Expressions
+
+```{r}
+plot(1:10, 1:10, type = 'n')
+opt = par(cex = 1.5)
+text(1, 1, expression(hat(x)))
+text(2, 2, expression(alpha==x))
+text(3, 3, expression(beta==y))
+text(4, 4, expression(frac(x, y)))
+text(5, 5, expression(sum(x)))
+text(6, 6, expression(sum(x^2)))
+text(7, 7, expression(bar(x) == sum(frac(x[i], n), i==1, n)))
+text(8, 8, expression(sqrt(x)))
+text(9, 9, expression(sqrt(x, 3)))
+```
+
+```{r}
+plot(temp$pretest ~ temp$posttest, data = temp, pch = 21, ylab = 'PreTest', xlab = 'PostTest')
+points(temp$pretest ~ temp$posttest, data = temp, pch = 19)
+legend(x = 'topright', legend = c('PreTest', 'PostTest'), pch = c(21,19), bty = 
+'n')
+```
+
+```{r}
+curve(sin, -pi*2, pi*2, lty = 2, lwd = 1.5, ylab = 'Function', ylim = c(-1,1.5))
+curve(cos, -pi*2, pi*2, lty = 3, lwd = 1, add = TRUE)
+legend(x = 'topright', legend = c('Sine', 'Cosine'), lty = c(2, 3), 
+lwd = c(1.5, 1), bty = 'n')
+title(main = 'Sine and Cosine functions')
+```
+
+```{r}
+plot(temp$pretest ~ temp$posttest, data = df, main = 'plot 1')
+plot(temp$pretest ~ temp$posttest, data = df, main = 'plot 2')
+plot(temp$pretest ~ temp$posttest, data = df, main = 'plot 3')
+plot(temp$pretest ~ temp$posttest, data = df, main = 'plot 4')
+par(opt)
+```
+
+```{r}
+plot(temp$pretest ~ temp$posttest, data = df, main = 'plot 1')
+plot.new()
+plot.new()
+plot(temp$pretest ~ temp$posttest, data = df, main = 'plot 4')
+par(opt)
+```
+
+### Simple customized Functions with multiple lines
+
+```{r}
+cummeadian = function(x) {
+tmp = seq_along(x)
+for(i in 1:length(tmp)) tmp[i] = median(x[1:i])
+print(x)}
+```
+
+```{r}
+cummeadian(temp$posttest)
+```
+
+### One-Line Functions
+
+```{r}
+log2 = function(x) log(x, base = 2)
+log2
+```
+
+```{r}
+log2(temp$posttest)
+```
+
+### Using Default Values in Functions
+
+```{r}
+manning = function(radius, gradient, coef=0.1125) (radius^(2/3)*gradient^0.5/coef)
+```
+
+```{r}
+manning(radius = 1, gradient = 1/500)
+```
+
+### Chaining Functions Together with %>%, the Pipe Operator
+
+```{r}
+df %>% filter(df$school == 'ANKYI') %>% summary()
+```
+
+### Without the pipe operator, the preceding code would be written like this:
+
+```{r}
+summary(filter(df, school == 'ANKYI'))
+```
+
+### Creating a Scatter Plot
+
+```{r}
+plot(temp$pretest, temp$posttest)
+```
+
+### With ggplot2, you can get a similar result using the ggplot() function
+
+```{r}
+library(ggplot2)
+```
+
+```{r}
+ggplot(temp, aes(x = temp$pretest, y = temp$posttest)) + geom_point()
+```
+
+### Creating a Line Graph
+
+```{r}
+plot(temp$pretest, type = 'l')
+```
+
+### With ggplot2
+
+```{r}
+ggplot(temp, aes(x = posttest, y = pretest)) + geom_line()
+```
+
+### Creating a Bar Graph
+
+```{r}
+ggplot(temp, aes(x = temp$posttest, y = temp$pretest)) + geom_col()
+```
+
+###  Creating a Histogram
+
+```{r}
+ggplot(temp, aes(x = temp$posttest)) + geom_histogram(binwidth = .5)
+```
+
+### Creating a Box Plot
+
+```{r}
+ggplot(temp, aes(x = temp$pretest, y = temp$posttest)) + geom_boxplot()
+```
+
+```{r}
+ggplot(temp, aes(x = pretest, y = posttest)) + geom_col(fill = "lightblue", colour = "black")
+
+```
+
+### Grouping Bars Together
+
+```{r}
+ggplot(df, aes(x = school_setting, y = school, fill = posttest)) + geom_col(position = "dodge")
+```
+
+```{r}
+ggplot(df, aes(x = school_type, y = school, fill = posttest)) + geom_col(position = "dodge")
+```
+
+```{r}
+ggplot(df, aes(x = school_type, y = school, fill = posttest)) + geom_col(position = "dodge")
+```
+
+```{r}
+ggplot(df, aes(x = teaching_method, y = school, fill = posttest)) + geom_col(position = "dodge")
+```
+
+```{r}
+ggplot(df, aes(x = n_student, y = school, fill = posttest)) + geom_col(position = "dodge")
+```
+
+```{r}
+ggplot(df, aes(x = gender, y = school, fill = posttest)) + geom_col(position = "dodge")
+```
+
+```{r}
+ggplot(df, aes(x = lunch, y = school, fill = posttest)) + geom_col(position = "dodge")
+```
+
+```{r}
+ggplot(df, aes(x = school_type, y = school, fill = school_setting)) + geom_col(position = "dodge")
+```
+
+```{r}
+ggplot(temp, aes(x = gender, y = school_setting, fill = posttest)) + geom_col()
+```
+
+###  Making a Cleveland Dot Plot
+
+```{r}
+ggplot(df, aes(x = n_student, y = school)) + geom_point()
+```
+
+```{r}
+ggplot(df, aes(x = n_student, y = school)) +
+ geom_point(size = 3) + # Use a larger dot
+ theme_bw() +
+ theme(
+ panel.grid.major.x = element_blank(),
+ panel.grid.minor.x = element_blank(),
+ panel.grid.major.y = element_line(colour = "grey60", linetype = "dashed")
+ )
+```
+
+```{r}
+ggplot(df, aes(x = n_student, y = school)) +
+geom_segment(aes(yend = school), xend = 0, colour = "grey50") + 
+  geom_point(size = 2) 
+```
+
+```{r}
+ggplot(df,aes(x=school_setting, y=pretest, colour= gender)) + geom_point()
+```
+
+```{r}
+ggplot(df,aes(x=school_setting, y=posttest, colour = school)) + geom_point()
+```
+
+```{r}
+plot(df)
+```
+
+```{r}
+ggplot(df, aes(x = df$school_setting, y = df$n_student)) +
+ geom_point(size = 1.5)
+```
+
+```{r}
+tt <- df %>%
+ filter(df$school_type == 'Public') %>%
+ select(school, n_student, pretest, posttest)
+head(tt)
+```
+
+```{r}
+tt = df %>% filter(df$gender == 'Female') %>% select(school, n_student, teaching_method, pretest, posttest)
+head(tt)
+```
+
+```{r}
+summary(tt)
+```
+
+```{r}
+tt = df %>% filter(df$gender == 'Male') %>% select(school, n_student, teaching_method, pretest, posttest)
+head(tt)
+```
+
+```{r}
+summary(tt)
+```
+
+```{r}
+tt = df %>% group_by(df$school) %>% summary()
+tt
+```
